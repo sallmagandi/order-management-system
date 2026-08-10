@@ -13,6 +13,7 @@ I designed the system architecture, built custom functions for each process, and
 - **Add Orders**: Saves food/item choices inside a persistent database with auto-incremented IDs.
 - **View Orders**: Checks if the kitchen queue is empty and displays all active orders.
 - **Deliver Orders**: Searches the database for a specific ID, removes it upon completion, and prevents crashes via a flag validation check.
+- **Close Shift**: Safely terminates the infinite loop and turns off the system.
 - **Error Handling**: Full protection against unknown menu entries and invalid user inputs.
 
 ## 💻 Tech Stack
