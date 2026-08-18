@@ -15,8 +15,6 @@ def new():
     if choose in dishes:
         cursor.execute("INSERT INTO orders (dish) VALUES (?)", (choose,) )
         connection.commit()
-        cursor.execute("SELECT * FROM orders")
-        all_orders=cursor.fetchall()
         print(f"Succes! '{choose}' added to kichen.")
     else:
         print("Error: Dish not found.")
@@ -35,10 +33,19 @@ def delete():
     all_orders=cursor.fetchall()
     for row in all_orders:
         print(f"Order ID: {row[0]}: {row [1]}")
-    choose=int(input("Enter order ID to deliver: "))
-    cursor.execute("DELETE FROM orders WHERE id = ?", (choose,))
-    connection.commit()
-    print("Order delivered.")
+    while True:
+        try:
+            choose=int(input("Enter order ID to deliver: "))
+            active_ids= [row[0] for row in all_orders]
+            if choose in active_ids:
+                cursor.execute("DELETE FROM orders WHERE id = ?", (choose,))
+                connection.commit()
+                print("Order delivered.")
+                break
+            else:
+                print("Error! This order id does not exist. Please try again.")
+        except ValueError:
+            print("Error! Please enter an order ID number, not letters!")
 #4
 def clear():
     cursor.execute("DELETE FROM orders")
